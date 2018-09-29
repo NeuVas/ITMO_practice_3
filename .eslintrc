@@ -1,0 +1,55 @@
+{
+    "extends": ["airbnb"],
+    "plugins": ["import", "jsx-a11y"],
+    "globals": {
+        "chai": false,
+        "axios": false
+    },
+    "rules": {
+        "global-require": "warn",
+        "indent": [ "error", 4, { "SwitchCase": 1 }],
+        "no-unused-vars": "warn",
+        "no-console": ["error", { "allow": ["info"] }],
+        "arrow-parens": [
+            "error",
+            "as-needed",
+            { "requireForBlockBody": false }
+        ],
+        "no-param-reassign": "warn",
+        "no-plusplus": [
+            "error",
+            { "allowForLoopAfterthoughts": true }
+        ],
+        "linebreak-style": ["error", "windows"],
+        "operator-linebreak": ["error", "after"],
+
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "devDependencies": true }
+        ],
+        "import/extensions": [
+            "error",
+            "always",
+            { "ignorePackages": true }
+        ],
+
+        "react/prefer-stateless-function": "error",
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-max-props-per-line": ["error", { "maximum": 1 }],
+        "react/jsx-filename-extension": [
+            "error",
+            { "extensions": [".js", ".jsx"] }
+        ]
+    },
+    "parserOptions": {
+        "ecmaVersion": 9
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jest": true,
+        "mocha": true
+    }
+}
