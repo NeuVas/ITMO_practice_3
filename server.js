@@ -4,9 +4,9 @@ const morgan = require('morgan');
 const ejs = require('ejs');
 const { MongoClient } = require('mongodb');
 
-const db = require('./server/mongodb/config');
-const includeAPI = require('./server/routes/api');
-const includeErrorsPages = require('./server/pages/errors');
+const db = require('./src/mongodb/config');
+const includeAPI = require('./src/routes/api');
+const includeErrorsPages = require('./src/pages/errors');
 
 const app = express();
 
