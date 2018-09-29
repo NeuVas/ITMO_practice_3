@@ -1,7 +1,7 @@
 {
     "name": "itmo_practice_3",
     "version": "0.1.0",
-    "description": "Light Poster service with React-Route and server API part",
+    "description": "Task list with React-Route and server API part",
     "keywords": [
         "jest",
         "react",
@@ -69,12 +69,13 @@
         "prop-types": "15.6.2",
         "react": "16.5.2",
         "react-dom": "16.5.2",
-        "react-router": "4.3.1"
+        "react-router-dom": "4.3.1"
     },
     "devDependencies": {
         "@babel/preset-env": "7.1.0",
         "@babel/preset-react": "7.0.0",
         "babel-core": "7.0.0-bridge.0",
+        "babel-eslint": "10.0.1",
         "babel-loader": "8.0.4",
         "babel-plugin-transform-class-properties": "6.24.1",
         "clean-webpack-plugin": "0.1.19",
@@ -84,7 +85,6 @@
         "enzyme-to-json": "3.3.4",
         "eslint": "5.6.1",
         "eslint-config-airbnb": "17.1.0",
-        "eslint-plugin-babel": "5.2.1",
         "eslint-plugin-import": "2.14.0",
         "eslint-plugin-jsx-a11y": "6.1.1",
         "eslint-plugin-react": "7.11.1",
