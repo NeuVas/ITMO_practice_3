@@ -21,40 +21,67 @@
         "name": "Vasilii Kovalev",
         "email": "vasya.kowalev@yandex.ru"
     },
-    "main": "server.js",
+    "main": "index.jsx",
     "repository": {
         "type": "git",
         "url": "https://github.com/vasilii-kovalev/ITMO_practice_3.git"
     },
     "scripts": {
-        "start": "node server.js",
-        "dev": "set NODE_ENV=development && nodemon server.js",
+        "build": "webpack --mode=production",
+        "dev": "webpack-dev-server --mode=development --open",
         "test": "jest",
+        "test:coverage": "jest --coverage",
         "test:watch": "jest --watch",
-        "lint": "eslint --quiet server/ --ext .js",
-        "stylelint": "stylelint client/**/*.scss"
+        "lint": "eslint --quiet src/**/*.{js,jsx}",
+        "stylelint": "stylelint src/**/*.scss"
     },
     "pre-commit": [
-        "lint"
+        "lint",
+        "stylelint",
+        "test"
     ],
     "jest": {
         "verbose": true,
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ],
+        "setupTestFrameworkScriptFile": "<rootDir>setupTests.js",
         "testURL": "http://localhost/",
         "roots": [
-            "<rootDir>/client"
+            "<rootDir>/src"
         ],
-        "testRegex": "__tests__/.*\\.test\\.js$"
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx}",
+            "!src/index.jsx"
+        ],
+        "testRegex": "__tests__/.*\\.test\\.jsx?$"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/react"
+        ],
+        "plugins": [
+            "transform-class-properties"
+        ]
     },
     "dependencies": {
-        "body-parser": "1.18.3",
-        "dayjs": "1.7.7",
-        "ejs": "2.6.1",
-        "express": "4.16.3",
-        "mongodb": "3.1.6",
-        "morgan": "1.9.1"
+        "prop-types": "15.6.2",
+        "react": "16.5.2",
+        "react-dom": "16.5.2",
+        "react-router": "4.3.1"
     },
     "devDependencies": {
-        "babel-eslint": "10.0.1",
+        "@babel/preset-env": "7.1.0",
+        "@babel/preset-react": "7.0.0",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-loader": "8.0.4",
+        "babel-plugin-transform-class-properties": "6.24.1",
+        "clean-webpack-plugin": "0.1.19",
+        "css-loader": "1.0.0",
+        "enzyme": "3.6.0",
+        "enzyme-adapter-react-16": "1.5.0",
+        "enzyme-to-json": "3.3.4",
         "eslint": "5.6.1",
         "eslint-config-airbnb": "17.1.0",
         "eslint-plugin-babel": "5.2.1",
@@ -62,12 +89,17 @@
         "eslint-plugin-jsx-a11y": "6.1.1",
         "eslint-plugin-react": "7.11.1",
         "jest": "23.6.0",
-        "nodemon": "1.18.4",
+        "node-sass": "4.9.3",
         "pre-commit": "1.2.2",
         "prettier": "1.14.3",
+        "sass-loader": "7.1.0",
+        "style-loader": "0.23.0",
         "stylelint": "9.6.0",
         "stylelint-config-idiomatic-order": "5.0.0",
         "stylelint-config-standard": "18.2.0",
-        "stylelint-scss": "3.3.1"
+        "stylelint-scss": "3.3.1",
+        "webpack": "4.20.2",
+        "webpack-cli": "3.1.1",
+        "webpack-dev-server": "3.1.9"
     }
 }

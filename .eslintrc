@@ -1,13 +1,25 @@
 {
-    "extends": ["airbnb"],
-    "plugins": ["import", "jsx-a11y"],
-    "globals": {
-        "chai": false,
-        "axios": false
+    "extends": [
+        "airbnb",
+        "plugin:react/recommended",
+        "plugin:import/react",
+        "plugin:import/recommended"
+    ],
+    "plugins": ["import", "jsx-a11y", "react"],
+    "parserOptions": {
+        "ecmaVersion": 9,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
     },
     "rules": {
-        "global-require": "warn",
-        "indent": [ "error", 4, { "SwitchCase": 1 }],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "no-unused-vars": "warn",
         "no-console": ["error", { "allow": ["info"] }],
         "arrow-parens": [
@@ -16,10 +28,7 @@
             { "requireForBlockBody": false }
         ],
         "no-param-reassign": "warn",
-        "no-plusplus": [
-            "error",
-            { "allowForLoopAfterthoughts": true }
-        ],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
         "linebreak-style": ["error", "windows"],
         "operator-linebreak": ["error", "after"],
 
@@ -27,11 +36,7 @@
             "error",
             { "devDependencies": true }
         ],
-        "import/extensions": [
-            "error",
-            "always",
-            { "ignorePackages": true }
-        ],
+        "import/extensions": ["error", "ignorePackages"],
 
         "react/prefer-stateless-function": "error",
         "react/jsx-indent": ["error", 4],
@@ -41,15 +46,5 @@
             "error",
             { "extensions": [".js", ".jsx"] }
         ]
-    },
-    "parserOptions": {
-        "ecmaVersion": 9
-    },
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true,
-        "jest": true,
-        "mocha": true
     }
 }
