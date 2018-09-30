@@ -6,7 +6,7 @@ const { MongoClient } = require('mongodb');
 
 const db = require('./src/mongodb/config');
 const includeAPI = require('./src/routes/api');
-const includeErrorsPages = require('./src/pages/errors');
+const includePublicPages = require('./src/routes/public');
 
 const app = express();
 
@@ -33,13 +33,12 @@ MongoClient.connect(
             console.info(error);
         }
 
-        const database = client.db('poster');
+        const database = client.db('todo-list');
 
         // Router.
         includeAPI(app, database);
 
-        // Error handlers & pages.
-        includeErrorsPages(app);
+        includePublicPages(app);
 
         // Event listener.
         app.listen(port, () => {
