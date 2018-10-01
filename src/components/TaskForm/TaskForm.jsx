@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 class TaskForm extends Component {
     static propTypes = {
-        onSubmit: PropTypes.func.isRequired,
+        addTask: PropTypes.func.isRequired,
     };
 
     inputRef = createRef();
 
     onSubmit = event => {
-        const { onSubmit } = this.props;
+        const { addTask } = this.props;
         const newTaskValue = this.inputRef.current.value;
 
         event.preventDefault();
         this.inputRef.current.value = '';
-        onSubmit(newTaskValue, this.clearInput);
+        addTask(newTaskValue, this.clearInput);
     };
 
     render() {
