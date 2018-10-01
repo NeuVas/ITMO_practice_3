@@ -22,7 +22,7 @@
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "no-unused-vars": "warn",
-        "no-console": ["error", { "allow": ["info"] }],
+        "no-console": ["error", { "allow": ["info", "error"] }],
         "arrow-parens": [
             "error",
             "as-needed",

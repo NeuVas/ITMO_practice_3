@@ -4,7 +4,7 @@ import TaskForm from '../TaskForm/TaskForm';
 import TasksList from '../TasksList/TasksList';
 
 // TODO: remove this hardcode.
-const BASE_URL = 'https://vasilii-kovalev-todo-list.herokuapp.com';
+const API_URL = 'https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks';
 
 const tasksPage = status => {
     class TasksPage extends Component {
@@ -16,16 +16,35 @@ const tasksPage = status => {
             this.fetchData();
         }
 
-        fetchData = () => fetch(`${BASE_URL}/api/tasks/${status}`)
+        onSubmit = taskText => {
+            fetch(
+                `${API_URL}/add`,
+                this.setupFetchConfig({ method: 'POST', body: { text: taskText } }),
+            )
+                .then(() => this.fetchData())
+                .catch(console.error);
+        };
+
+        fetchData = () => fetch(`${API_URL}/${status}`)
             .then(data => data.json())
-            .then(data => this.setState({ data }));
+            .then(data => this.setState({ data }))
+            .catch(console.error);
+
+        setupFetchConfig = ({ method, body }) => ({
+            method,
+            body: JSON.stringify(body),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
 
         render() {
             const { data } = this.state;
 
             return (
                 <Fragment>
-                    <TaskForm />
+                    <TaskForm onSubmit={this.onSubmit} />
                     <TasksList
                         data={data}
                         status={status}
