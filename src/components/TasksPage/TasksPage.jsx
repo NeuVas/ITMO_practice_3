@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import TaskForm from '../TaskForm/TaskForm';
 import TasksList from '../TasksList/TasksList';
@@ -10,6 +11,12 @@ const tasksPage = status => {
     class TasksPage extends Component {
         state = {
             tasks: [],
+        };
+
+        static propTypes = {
+            location: PropTypes.shape({
+                pathname: PropTypes.string.isRequired,
+            }).isRequired,
         };
 
         componentDidMount() {
@@ -25,27 +32,22 @@ const tasksPage = status => {
                 .catch(console.error);
         };
 
-        updateTask = (taskId, { text: newText, status: newStatus }) => {
+        updateTask = ({ id: taskId, text, isInProgress }) => {
             const { tasks } = this.state;
             const [task] = tasks.filter(({ id }) => id === taskId);
-            const { text: oldText, status: oldStatus } = task;
 
-            if (oldText !== newText || oldStatus !== newStatus) {
-                if (oldText !== newText) {
-                    task.text = newText;
-                }
-
-                if (oldStatus !== newStatus) {
-                    task.status = newStatus;
-                }
-
-                fetch(
-                    `${API_URL}/${taskId}`,
-                    this.setupFetchConfig({ method: 'PUT', body: task }),
-                )
-                    .then(() => this.fetchData())
-                    .catch(console.error);
+            if (task.text !== text) {
+                task.text = text;
+            } else {
+                task.status = isInProgress ? 'completed' : 'in_progress';
             }
+
+            fetch(
+                `${API_URL}/${taskId}`,
+                this.setupFetchConfig({ method: 'PUT', body: task }),
+            )
+                .then(() => this.fetchData())
+                .catch(console.error);
         };
 
         deleteTask = taskId => fetch(
@@ -76,20 +78,30 @@ const tasksPage = status => {
             return config;
         };
 
+        isInProgress = taskStatus => taskStatus === 'in_progress';
+
         render() {
+            const { location: { pathname } } = this.props;
             const { tasks } = this.state;
-            const reversedTasks = tasks.reverse();
+            const reversedTasks = tasks
+                .reverse()
+                .map(({ status: taskStatus, ...rest }) => ({
+                    isInProgress: this.isInProgress(taskStatus),
+                    status: taskStatus,
+                    ...rest,
+                }));
 
             return (
-                <Fragment>
+                <div style={{ width: 750, margin: '32px auto 0px' }}>
                     <TaskForm addTask={this.addTask} />
                     <TasksList
+                        pathname={pathname}
                         tasks={reversedTasks}
                         status={status}
                         updateTask={this.updateTask}
                         deleteTask={this.deleteTask}
                     />
-                </Fragment>
+                </div>
             );
         }
     }

@@ -1,6 +1,16 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+});
+
 class TaskForm extends Component {
     static propTypes = {
         addTask: PropTypes.func.isRequired,
@@ -20,17 +30,20 @@ class TaskForm extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <button type="submit">+</button>
-                <input
-                    ref={this.inputRef}
-                    type="text"
-                    name="new-task"
+                <Input
+                    id="standard-full-width"
+                    defaultValue=""
                     required
+                    fullWidth
                     placeholder="Type new task here"
+                    inputProps={{
+                        ref: this.inputRef,
+                        'aria-label': 'Description',
+                    }}
                 />
             </form>
         );
     }
 }
 
-export default TaskForm;
+export default withStyles(styles)(TaskForm);
