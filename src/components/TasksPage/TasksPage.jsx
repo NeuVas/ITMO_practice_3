@@ -9,8 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import TaskForm from '../TaskForm/TaskForm';
 import TasksList from '../TasksList/TasksList';
 
-// TODO: remove this hardcode.
-const API_URL = 'https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks';
+const API_URL = '/api/tasks';
 
 const styles = () => ({
     root: {
