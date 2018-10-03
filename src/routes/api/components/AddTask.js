@@ -4,7 +4,7 @@ module.exports = collection => (req, res) => {
     const { text } = req.body;
     const newPost = {
         text,
-        status: 'in_progress',
+        isInProgress: true,
         created: dayjs().format('HH:mm DD.MM.YYYY'),
     };
 

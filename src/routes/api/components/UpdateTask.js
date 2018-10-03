@@ -3,11 +3,11 @@ const dayjs = require('dayjs');
 
 module.exports = collection => (req, res) => {
     const { id } = req.params;
-    const { text, status } = req.body;
+    const { text, isInProgress } = req.body;
     const details = { _id: new ObjectID(id) };
     const updatedPost = {
         text,
-        status,
+        isInProgress,
         lastUpdate: dayjs().format('HH:mm DD.MM.YYYY'),
     };
 

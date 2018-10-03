@@ -6,7 +6,9 @@ const TASK_STATUS = {
 
 module.exports = collection => (req, res) => {
     const { status } = req.params;
-    const config = status !== TASK_STATUS.all ? { status } : {};
+    const config = status === TASK_STATUS.all ?
+        {} :
+        { isInProgress: status === TASK_STATUS.inProgress };
 
     collection.find(config).toArray((error, result) => {
         if (error) {
