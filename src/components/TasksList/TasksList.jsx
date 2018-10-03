@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -29,17 +30,19 @@ const styles = theme => ({
 });
 
 class TasksList extends Component {
+    debouncedUpdateTask = debounce(this.props.updateTask, 800);
+
     onTextChange = props => event => {
         const {
             target: { value: newText },
         } = event;
 
         if (newText) {
-            this.props.updateTask({ text: newText, ...props });
+            this.debouncedUpdateTask({ text: newText, ...props });
         }
     };
 
-    onStatusChange = props => event => this.props.updateTask({ ...props });
+    onStatusChange = props => event => this.debouncedUpdateTask({ ...props });
 
     onDelete = id => event => this.props.deleteTask(id);
 
