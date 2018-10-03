@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import { withStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import TaskForm from '../TaskForm/TaskForm';
 import TasksList from '../TasksList/TasksList';
@@ -7,16 +12,39 @@ import TasksList from '../TasksList/TasksList';
 // TODO: remove this hardcode.
 const API_URL = 'https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks';
 
-const tasksPage = status => {
+const styles = () => ({
+    root: {
+        width: 750,
+        margin: '32px auto 0px',
+    },
+});
+
+const tasksPage = activeTabStatus => {
     class TasksPage extends Component {
         state = {
             tasks: [],
         };
 
+        TABS = [
+            {
+                status: 'all',
+                label: 'All',
+            },
+            {
+                status: 'in_progress',
+                label: 'In Progress',
+            },
+            {
+                status: 'completed',
+                label: 'Completed',
+            },
+        ];
+
         static propTypes = {
             location: PropTypes.shape({
                 pathname: PropTypes.string.isRequired,
             }).isRequired,
+            classes: PropTypes.objectOf(PropTypes.string).isRequired,
         };
 
         componentDidMount() {
@@ -39,25 +67,19 @@ const tasksPage = status => {
             if (task.text !== text) {
                 task.text = text;
             } else {
-                task.status = isInProgress ? 'completed' : 'in_progress';
+                task.isInProgress = !isInProgress;
             }
 
-            fetch(
-                `${API_URL}/${taskId}`,
-                this.setupFetchConfig({ method: 'PUT', body: task }),
-            )
+            fetch(`${API_URL}/${taskId}`, this.setupFetchConfig({ method: 'PUT', body: task }))
                 .then(() => this.fetchData())
                 .catch(console.error);
         };
 
-        deleteTask = taskId => fetch(
-            `${API_URL}/${taskId}`,
-            { method: 'DELETE' },
-        )
+        deleteTask = taskId => fetch(`${API_URL}/${taskId}`, { method: 'DELETE' })
             .then(() => this.fetchData())
             .catch(console.error);
 
-        fetchData = () => fetch(`${API_URL}/${status}`)
+        fetchData = () => fetch(`${API_URL}/${activeTabStatus}`)
             .then(data => data.json())
             .then(tasks => this.setState({ tasks }))
             .catch(console.error);
@@ -80,24 +102,37 @@ const tasksPage = status => {
 
         isInProgress = taskStatus => taskStatus === 'in_progress';
 
+        renderStatusTabs = () => this.TABS.map(({ status, label }, index) => (
+            <Tab
+                key={index}
+                label={label}
+                value={`/tasks/${status}`}
+                component={Link}
+                to={`/tasks/${status}`}
+            />
+        ));
+
         render() {
-            const { location: { pathname } } = this.props;
+            const {
+                location: { pathname },
+                classes: { root },
+            } = this.props;
             const { tasks } = this.state;
-            const reversedTasks = tasks
-                .reverse()
-                .map(({ status: taskStatus, ...rest }) => ({
-                    isInProgress: this.isInProgress(taskStatus),
-                    status: taskStatus,
-                    ...rest,
-                }));
+            const reversedTasks = tasks.reverse();
 
             return (
-                <div style={{ width: 750, margin: '32px auto 0px' }}>
+                <div className={root}>
                     <TaskForm addTask={this.addTask} />
+                    <Tabs
+                        value={pathname}
+                        indicatorColor="primary"
+                        textColor="primary"
+                    >
+                        {this.renderStatusTabs()}
+                    </Tabs>
                     <TasksList
                         pathname={pathname}
                         tasks={reversedTasks}
-                        status={status}
                         updateTask={this.updateTask}
                         deleteTask={this.deleteTask}
                     />
@@ -106,7 +141,7 @@ const tasksPage = status => {
         }
     }
 
-    return TasksPage;
+    return withStyles(styles)(TasksPage);
 };
 
 export default tasksPage;
