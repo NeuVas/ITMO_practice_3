@@ -13,8 +13,6 @@
 * Lodash;
 * Babel;
 * Webpack;
-* Jest;
-* Enzyme;
 * ESLint;
 * Stylelint.
 
@@ -36,18 +34,22 @@
 * [/{any-other-URL}](https://vasilii-kovalev-todo-list.herokuapp.com/any-other-URL) — страница ошибки 404.
 
 ## Описание публичного API:
-* [/api/tasks/all](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/all) (`GET`) — возвращает список всех дел;
-* [/api/tasks/in_progress](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/in_progress) (`GET`) — возвращает список незавершённых дел;
-* [/api/tasks/completed](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/completed) (`GET`) — возвращает список завершённых дел;
+* [/api/tasks/all](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/all) (`GET`) — возвращает список всех дел.
+* [/api/tasks/in_progress](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/in_progress) (`GET`) — возвращает список незавершённых дел.
+* [/api/tasks/completed](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/completed) (`GET`) — возвращает список завершённых дел.
 * [/api/tasks/add](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/add) (`POST`) — добавляет дело в список дел.
 <br />
+
 __Пример запроса__:
+
 ```JSON
 {
     "text": "New task"
 }
 ```
+
 __Пример ответа__:
+
 ```JSON
 {
     "created": "19:02 10.12.2018",
@@ -56,9 +58,12 @@ __Пример ответа__:
     "_id": "5c0eb8552bcad700154757d4"
 }
 ```
+
 * [/api/tasks/:id](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/5c0eb8552bcad700154757d4) (`PUT`) — обновляет дело в списке дел по id.
 <br />
+
 __Пример запроса__:
+
 ```JSON
 {
     "id": "5c0eb8552bcad700154757d4",
@@ -67,7 +72,9 @@ __Пример запроса__:
     "created": "19:02 10.12.2018"
 }
 ```
+
 __Пример ответа__:
+
 ```JSON
 {
     "text": "New task #2",
@@ -75,9 +82,12 @@ __Пример ответа__:
     "lastUpdate": "19:05 10.12.2018"
 }
 ```
+
 * [/api/tasks/:id](https://vasilii-kovalev-todo-list.herokuapp.com/api/tasks/5c0eb8552bcad700154757d4) (`DELETE`) — удаляет дело в списке дел по id.
 <br />
+
 __Пример ответа__:
+
 ```
 Post with id 5c0eb8552bcad700154757d4 deleted!
 ```
