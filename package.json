@@ -1,7 +1,7 @@
 {
     "name": "itmo_practice_3",
     "version": "0.1.0",
-    "description": "Light Poster service with React-Route and server API part",
+    "description": "Light ToDo List app with React-Route and server API part",
     "keywords": [
         "jest",
         "react",
@@ -29,7 +29,7 @@
     "scripts": {
         "start": "node server.js",
         "dev": "set NODE_ENV=development && nodemon server.js",
-        "lint": "eslint --quiet server/ --ext .js"
+        "lint": "eslint --quiet src/ --ext .js"
     },
     "pre-commit": [
         "lint"
